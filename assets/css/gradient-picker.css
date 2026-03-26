@@ -1,0 +1,14 @@
+.acf-gradient-picker-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1em;
+}
+
+.acf-gradient-picker-control {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+    border-radius: 6px;
+}
+
