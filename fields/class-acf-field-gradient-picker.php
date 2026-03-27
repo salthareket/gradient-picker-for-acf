@@ -8,7 +8,7 @@ class acf_field_gradient_picker extends acf_field {
 
     public function __construct($settings = []) {
         $this->name = 'gradient_picker';
-        $this->label = $this->label = __('Gradient Picker', 'gradient-picker-for-acf');
+        $this->label = __('Gradient Picker', 'gradient-picker-for-acf');
         $this->category = 'advanced';
         $this->defaults = ['default_value' => ''];
         parent::__construct();

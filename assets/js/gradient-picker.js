@@ -19,38 +19,37 @@
             if (!input || !control) return;
 
             const Picker = () => {
-                const [value, setValue] = useState(input.value || defaultGradient);
+                const [value, setValue] = useState(input.value || '');
 
                 const update = (val) => {
                     setValue(val);
                     input.value = val;
                     input.dispatchEvent(new Event('change', { bubbles: true }));
-                    const preview = wrapper.querySelector('.components-custom-gradient-picker__gradient-bar-background');
-                    if (preview) preview.style.background = val;
                 };
 
                 const onClear = () => {
-                    update(defaultGradient);
+                    update('');
                 };
 
-                // Otomatik eklenen Gutenberg Clear button'unu temizle
+                // Remove auto-injected Gutenberg Clear button
                 setTimeout(() => {
                     const autoClear = wrapper.querySelector('.components-circular-option-picker__custom-clear-wrapper');
                     if (autoClear) autoClear.remove();
-                }, 100); // biraz delay veriyoruz çünkü DOM’a geç ekleniyor
-
+                }, 150);
 
                 return createElement('div', {},
                     createElement(GradientPicker, {
-                        value: value,
+                        value: value || defaultGradient,
                         onChange: update,
                         gradients: gradients
                     }),
-                    createElement(Button, {
-                        isSecondary: true,
-                        onClick: onClear,
-                        style: { marginTop: '8px' }
-                    }, 'Clear')
+                    value
+                        ? createElement(Button, {
+                            isSecondary: true,
+                            onClick: onClear,
+                            style: { marginTop: '8px' }
+                        }, 'Clear')
+                        : null
                 );
             };
 
@@ -59,19 +58,16 @@
     }
 
     document.addEventListener('DOMContentLoaded', initGradientPickers);
-    document.addEventListener('acf/append', initGradientPickers);
-    document.addEventListener('acf/ready', initGradientPickers);
 
-    acf.doAction = acf.doAction || function(){};
-    acf.addAction('acfe/modal/open', function($modal, args){
-        initGradientPickers();
-    });
+    if (typeof acf !== 'undefined') {
+        if (typeof acf.addAction === 'function') {
+            acf.addAction('append', function($el) {
+                $el.find('.acf-gradient-picker-wrapper[data-init]').removeAttr('data-init');
+                setTimeout(initGradientPickers, 50);
+            });
 
-    acf.addAction('append', function($el){
-        $el.find('[data-init]').removeAttr('data-init');
-        setTimeout(() => {
-            initGradientPickers();
-        }, 50);
-    });
+            acf.addAction('ready', initGradientPickers);
+        }
+    }
 
 })();
