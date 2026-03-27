@@ -2,16 +2,19 @@
 /**
  * Plugin Name: Gradient Picker for ACF
  * Description: A beautiful and professional gradient picker field for ACF, inspired by Gutenberg's native gradient tool.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Salt Hareket
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gradient-picker-for-acf
+ * Requires Plugins: advanced-custom-fields
  */
 
 if (!defined('ABSPATH')) exit;
 
 add_action('plugins_loaded', function () {
+
+    load_plugin_textdomain('gradient-picker-for-acf', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     if (!class_exists('acf')) {
         add_action('admin_notices', function () {
