@@ -7,7 +7,6 @@
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gradient-picker-for-acf
- * Requires Plugins: advanced-custom-fields
  */
 
 if (!defined('ABSPATH')) exit;
